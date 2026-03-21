@@ -13,24 +13,49 @@ GitHub：https://github.com/garrytan/gstack
 | Claude Code | 已安装并登录 |
 | Git | 已安装 |
 | Bun v1.0+ | `bun --version` 检查，未安装则运行 `curl -fsSL https://bun.sh/install \| bash` |
+| unzip | Linux 环境需要，`sudo apt install unzip -y` |
 
 ---
 
 ## 安装步骤
 
-### 1. 全局安装（推荐）
+### 1. 安装 Bun（如未安装）
+
+```bash
+curl -fsSL https://bun.sh/install | bash
+source ~/.bashrc   # 或 source ~/.zshrc
+```
+
+### 2. Linux 环境安装浏览器依赖（`/browse` 功能需要）
+
+```bash
+sudo apt-get install -y libnspr4 libnss3 libatk1.0-0t64 libatk-bridge2.0-0t64 \
+  libcups2t64 libxkbcommon0 libatspi2.0-0t64 libxcomposite1 libxdamage1 \
+  libxfixes3 libxrandr2 libgbm1 libcairo2 libpango-1.0-0
+```
+
+> macOS 不需要这步，仅 Linux（如 OrbStack Ubuntu）需要。
+
+### 3. 全局安装（推荐）
 
 ```bash
 git clone https://github.com/garrytan/gstack.git ~/.claude/skills/gstack && cd ~/.claude/skills/gstack && ./setup
 ```
 
-### 2. 项目级安装（可选，让团队成员共享）
+安装成功会看到：
+
+```
+linked skills: browse careful codex design-consultation ...
+gstack ready (claude).
+```
+
+### 4. 项目级安装（可选，让团队成员共享）
 
 ```bash
 cp -Rf ~/.claude/skills/gstack .claude/skills/gstack && rm -rf .claude/skills/gstack/.git && cd .claude/skills/gstack && ./setup
 ```
 
-### 3. 多 Agent 支持（Codex / Gemini CLI / Cursor）
+### 5. 多 Agent 支持（Codex / Gemini CLI / Cursor）
 
 ```bash
 git clone https://github.com/garrytan/gstack.git ~/gstack
