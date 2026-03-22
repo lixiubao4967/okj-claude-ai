@@ -51,16 +51,19 @@
 # 在 Claude Code 中打开插件管理器
 /plugin
 
-# 从官方市场安装插件（官方市场自动可用，无需手动添加）
-/plugin install <plugin-name>@claude-plugins-official
+# ⚠️ 首次使用需先添加官方插件市场（只需执行一次）
+/plugin marketplace add anthropics/claude-plugins-official
 
-# 从示例市场安装（需先添加市场）
-/plugin marketplace add anthropics/claude-code
-/plugin install <plugin-name>@anthropics-claude-code
+# 从官方市场安装插件
+/plugin install <plugin-name>@claude-plugins-official
 
 # 安装后重新加载插件
 /reload-plugins
 ```
+
+> **实测说明：** 官方市场**不会**自动可用，必须手动添加 `anthropics/claude-plugins-official` 仓库。
+> 原文提到的 `anthropics/claude-code` 是 Claude Code 源码仓库，仅包含部分插件；
+> 完整的官方插件目录在 `anthropics/claude-plugins-official`（含 32 个内部插件 + 16 个外部插件）。
 
 ### 管理插件
 
