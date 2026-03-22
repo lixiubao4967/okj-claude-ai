@@ -241,16 +241,20 @@
 
 LSP 插件为 Claude 提供实时代码智能（跳转定义、查找引用、类型检查等）。
 
-### 安装示例（以 TypeScript 和 Python 为例）
+### 安装示例（Go、Python、TypeScript、Rust）
 
 ```bash
 # 1. 确保系统已安装对应的语言服务器二进制文件
 npm install -g typescript-language-server typescript  # TypeScript
-pip install pyright                                     # Python
+pip install pyright                                   # Python
+go install golang.org/x/tools/gopls@latest            # Go
+rustup component add rust-analyzer                    # Rust
 
 # 2. 在 Claude Code 中安装 LSP 插件
 /plugin install typescript-lsp@claude-plugins-official
 /plugin install pyright-lsp@claude-plugins-official
+/plugin install gopls-lsp@claude-plugins-official
+/plugin install rust-analyzer-lsp@claude-plugins-official
 /reload-plugins
 ```
 
