@@ -221,6 +221,16 @@ memory-bank/
 └── architecture.md           # 架构说明（开发中持续更新）
 ```
 
+**memory-bank 就是 Vibe Coding 的核心机制**，五个文件各司其职：
+
+| 文件 | 作用 |
+|------|------|
+| `game-design-document.md` | 这个项目是什么、解决什么问题 |
+| `tech-stack.md` | 用什么技术、为什么 |
+| `implementation-plan.md` | 分几步做、每步怎么验收 |
+| `progress.md` | 做到哪了、遇到什么问题 |
+| `architecture.md` | 代码结构长什么样 |
+
 ### 第六步：开始开发
 
 **每次新开会话时**，先把记忆库喂给 AI：
