@@ -187,6 +187,48 @@ Channels 基于 **MCP（Model Context Protocol）** 实现，是一个 MCP Serve
 
 ---
 
+## Claude Code 官方插件指南
+
+> 详见 [`claude-code-plugins-guide.md`](./claude-code-plugins-guide.md)｜**来源：第三方文章解读 + 官方文档**
+
+Anthropic 官方持续扩充 Claude Code 插件生态，涵盖代码审查、安全指导、LSP 语言服务器、开发流程自动化等多个方向。
+
+**推荐插件一览：**
+
+| 插件 | 功能 |
+|------|------|
+| `claude-code-setup` | 分析代码库，自动推荐 Hooks/Skills/MCP 配置 |
+| `claude-md-management` | 维护 CLAUDE.md，补充缺失上下文 |
+| `learning-output-style` | 交互式学习模式，鼓励用户亲自编写代码 |
+| `hookify` | 自定义 Hook 创建与管理 |
+| `security-guidance` | 安全问题实时监控（XSS、注入等） |
+| `code-review` | 5 个并行 Agent 自动代码审查 |
+| `pr-review-toolkit` | 6 个专业 Agent 全面 PR 分析 |
+
+**快速安装：**
+
+```bash
+# 在 Claude Code 中安装任意官方插件
+/plugin install <plugin-name>@claude-plugins-official
+/reload-plugins
+```
+
+---
+
+## 本仓库文档来源说明
+
+| 文档 | 来源 |
+|------|------|
+| `README.md` | 自编 |
+| `gstack-install.md` | 自编 |
+| `claude-code-plugins-guide.md` | 第三方文章解读 + 官方文档整理 |
+
+- **自编**：由本仓库维护者原创编写
+- **官方**：直接翻译或搬运自 Anthropic 官方文档
+- **第三方文章解读**：基于第三方技术博客，结合官方文档整理，非 Anthropic 官方出品
+
+---
+
 ## 注意事项
 
 - 升级：`npm update -g @anthropic-ai/claude-code`
