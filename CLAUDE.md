@@ -11,6 +11,7 @@ This is a **documentation-only** repository containing Chinese-language (中文)
 - `README.md` — The main document covering Claude Code installation, common commands, keyboard shortcuts, and Channels (Telegram/Discord) configuration. **[自编]**
 - `gstack-install.md` — gstack 安装指南。**[自编]**
 - `claude-code-plugins-guide.md` — Claude Code 官方插件指南，包含插件分类、推荐插件的安装步骤和使用方法。**[第三方文章解读]** 原文来自 DevelopersIO（Classmethod），基于 Anthropic 官方插件文档整理。
+- `okg-claude-quickstart.md` — OKG 内部 Claude 快速入门完整指南，涵盖 Skills、MCP、Agents、Hooks、Plugins 全流程，含 SKILL.md 编写规范与模板。**[自编]** 基于 OKG 内部文档整理。
 
 ## Content Sources
 
