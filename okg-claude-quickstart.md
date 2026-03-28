@@ -1,6 +1,6 @@
-# OKG Claude 快速入门完整指南
+# Claude 快速入门完整指南
 
-> 基于 OKG 内部文档整理，涵盖 Skills、MCP、Agents、Hooks、Plugins 全流程。
+> 涵盖 Skills、MCP、Agents、Hooks、Plugins 全流程。
 
 ---
 
@@ -119,23 +119,21 @@ Restart Claude Desktop to apply changes.
      → 拒绝：Reviewer 通知你
 ```
 
-**遇到问题联系：** 于畅 Hilo Yu、Kevin Qu 曲小军、Kieran Hu Cang 胡仓
-
 ---
 
 ## 5. 使用团队的 Skills/Plugins
 
 **路径：** Claude Desktop → `Co-work` 标签 → `+` → `Add plugins...`
 
-在弹出面板中选择 `Your organization` Tab，找到 OKG 内部已上架的 Plugin，点击安装即可。
+在弹出面板中选择 `Your organization` Tab，找到已上架的 Plugin，点击安装即可。
 
 ---
 
 ## 6. 加入支持群
 
-Lark 群：**Claude: adoption**（OKG 内部）
+Lark 群：**Claude: adoption**
 
-仅限 OKG 组织成员加入，二维码永久有效。用于遇到问题、交流 Skill 创建、寻求咨询。
+用于遇到问题、交流 Skill 创建、寻求咨询。
 
 ---
 
@@ -390,7 +388,7 @@ one playing devil's advocate. Have them challenge each other's theories and
 converge on the most likely root cause.
 ```
 
-### OKG 实战案例：PMO + Star Agent
+### 实战案例：PMO + Star Agent
 
 ```
 start an agent team with 3 pmo agent and 1 star agent
