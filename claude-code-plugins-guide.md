@@ -173,6 +173,34 @@
 - 插件包含模式分析 Agent，能根据使用习惯推荐 Hook
 - 支持 `PreToolUse`、`PostToolUse`、`SessionStart` 等事件类型
 
+#### 实战：每次提交后自动更新 CLAUDE.md
+
+**需求**：每次 `git commit` 后，自动触发 `claude-md-management:revise-claude-md` 将本次变更的新知识同步进 CLAUDE.md。
+
+**限制**：Hookify 的 `bash` 事件是 **PreToolUse**（工具执行前触发），无法在 commit 完成后再执行操作。
+
+**解决方案**：改用 `stop` 事件——在 Claude 结束会话前发出提醒，效果等价。
+
+在项目根目录创建规则文件 `.claude/hookify.revise-claude-md-after-commit.local.md`：
+
+```markdown
+---
+name: revise-claude-md-after-commit
+enabled: true
+event: stop
+pattern: .*
+action: warn
+---
+
+**在结束之前：** 如果本次会话中执行过 `git commit`，请立即调用 `/revise-claude-md` skill 更新 CLAUDE.md，将本次变更涉及的新知识、配置要点同步进去，再结束会话。
+```
+
+> **说明**：
+> - 规则文件必须放在**项目**的 `.claude/` 目录，而不是用户全局 `~/.claude/`
+> - 命名规范：`hookify.{描述性名称}.local.md`
+> - 规则写入后**立即生效**，无需重启
+> - 若想强制执行（不更新 CLAUDE.md 就不让停），将 `action: warn` 改为 `action: block`
+
 ---
 
 ### 5. Security Guidance — 安全指导
