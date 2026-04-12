@@ -23,6 +23,7 @@ Claude Code 使用指南与实践记录，按主题分类。
 ### 工具
 
 - [gstack 安装指南](tools/gstack-install.md)
+- [Obsidian 集成指南](tools/obsidian-setup.md)
 
 ### 快速入门
 
