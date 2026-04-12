@@ -12,7 +12,7 @@
 ├── usage/                 ← 命令与快捷键
 ├── channels/              ← 远程控制（Telegram / Discord）
 ├── plugins/               ← 插件指南
-├── tools/                 ← 工具（gstack 等）
+├── tools/                 ← 工具（gstack / Obsidian 等）
 ├── quickstart/            ← 快速入门
 ├── workflow/              ← 工作流与方法论
 ├── internals/             ← 内部原理与源码分析
