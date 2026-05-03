@@ -24,6 +24,7 @@ Claude Code 使用指南与实践记录，按主题分类。
 
 - [gstack 安装指南](tools/gstack-install.md)
 - [Obsidian 集成指南](tools/obsidian-setup.md)
+- [MCP 安装记录（Context7 / GitHub）](tools/mcp-install.md)
 
 ### 快速入门
 
