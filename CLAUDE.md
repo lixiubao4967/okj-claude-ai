@@ -8,6 +8,7 @@
 
 ```
 ├── README.md              ← 索引页（导航入口）
+├── raw/                   ← 原始素材（待 ingest，处理完会删除；进 git 供溯源）
 ├── setup/                 ← 安装与初始配置
 ├── usage/                 ← 命令与快捷键
 ├── channels/              ← 远程控制（Telegram / Discord）
@@ -18,11 +19,13 @@
 ├── internals/             ← 内部原理与源码分析
 └── .claude/
     ├── rules/             ← 自动应用的上下文规则（doc-standards.md）
-    ├── skills/            ← 项目专属 skill（add-learning-doc）
+    ├── skills/            ← 项目专属 skill（add-learning-doc, ingest-raw）
     └── hookify.*.local.md ← 事件触发规则
 ```
 
 新文档必须放入对应分类目录。如果不属于现有分类，先建新目录再写文档。
+
+`raw/` 不是分类目录，是原始素材的 ingest 队列：放进去 → 用 `ingest-raw` skill 编译进分类目录 → 删除原文件（git 历史保留溯源）。
 
 ## 文档语言
 
