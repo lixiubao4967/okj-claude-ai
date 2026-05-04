@@ -17,6 +17,7 @@
 ├── quickstart/            ← 快速入门
 ├── workflow/              ← 工作流与方法论
 ├── internals/             ← 内部原理与源码分析
+├── wechat/                ← 微信公众号文稿（待 openclaw 推送）
 └── .claude/
     ├── rules/             ← 自动应用的上下文规则（doc-standards.md）
     ├── skills/            ← 项目专属 skill（add-learning-doc, ingest-raw）
