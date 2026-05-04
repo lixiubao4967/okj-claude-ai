@@ -11,7 +11,12 @@
 | MCP | 用途 | 安装日期 | 作用域 |
 |-----|------|----------|--------|
 | context7 | 实时拉取最新库 / SDK 文档 | 2026-05-04 | user |
-| github | 读取 GitHub PR / Issue / 代码（只读）| 2026-05-04 | user |
+
+## 尝试过但未采用
+
+| MCP | 尝试日期 | 放弃原因 |
+|-----|----------|----------|
+| GitHub MCP（远程托管 + 只读）| 2026-05-04 | OAuth 协议不兼容；PAT 备选方案配置成本超过收益（详见下方"GitHub MCP：尝试与放弃记录"） |
 
 ---
 
@@ -21,7 +26,6 @@
 |------|------|
 | Claude Code | 已安装并登录 |
 | Node.js | `npx` 可用（Context7 通过 npx 启动）|
-| GitHub 账号 | GitHub MCP 走 OAuth，需在浏览器中授权 |
 
 ---
 
@@ -29,7 +33,7 @@
 
 | 作用域 | 标志 | 适用场景 |
 |--------|------|----------|
-| user | `-s user` | 个人工具，跨所有项目通用（本次两个 MCP 都选这个）|
+| user | `-s user` | 个人工具，跨所有项目通用（本次选这个）|
 | project | `-s project` | 写入仓库 `.mcp.json`，与协作者共享 |
 | local | 默认 | 仅当前用户 + 当前项目 |
 
@@ -62,74 +66,66 @@ claude mcp list
 用 context7 查一下 Anthropic SDK 最新的 prompt caching 用法
 ```
 
+### 升级
+
+`npx -y` 每次启动都会拉最新，无需手动升级。
+
+### 卸载
+
+```bash
+claude mcp remove context7 -s user
+```
+
 ---
 
-## GitHub MCP（远程托管 + 只读）
+## GitHub MCP：尝试与放弃记录
 
-让 Claude 直接查 GitHub 的 PR / Issue / 代码，省掉手动跑 `gh` 命令。
+> **结论：放弃 MCP 路线，继续用 `gh` CLI。**
+> 本节记录失败原因与权衡过程，避免将来再尝试同样路径。
 
-### 关键决策
-
-> **不要用 `@modelcontextprotocol/server-github`。**
-> 这是一些旧文章里推荐的 npm 包，已被 GitHub 官方接管并归档，不再维护。改用 GitHub 官方提供的远程 MCP endpoint。
-
-> **走远程托管，不用本地 Docker。**
-> 远程 endpoint 一次 OAuth 授权即可，无需本机跑容器。
-
-> **走 `/readonly` endpoint，不走默认全功能 endpoint。**
-> 只读模式在 URL 路径层做隔离（`/mcp/readonly` 与 `/mcp/`），即使 OAuth token 有写权限，该 endpoint 也不会暴露写工具——比"在客户端过滤工具"更可靠。
-
-### 安装
+### 当时的安装命令
 
 ```bash
 claude mcp add --transport http github -s user https://api.githubcopilot.com/mcp/readonly
 ```
 
-### OAuth 授权（必须做一次）
+`/readonly` 在路径层做了写权限隔离，方向是对的。
 
-安装完后必须在 Claude Code 内完成 OAuth，否则连不上：
+> **不要用 `@modelcontextprotocol/server-github`。** 一些旧文章推荐的这个 npm 包，已被 GitHub 官方接管并归档，不再维护。
 
-1. 在 Claude Code 输入 `/mcp` 打开 MCP 管理面板
-2. 找到 `github` 项，按提示触发 OAuth
-3. 浏览器跳到 GitHub 授权页 → 同意 → 自动回到 Claude Code
+### 失败点：OAuth 不支持 RFC 7591 动态客户端注册
 
-> 未授权时 `claude mcp list` 会显示 `github: ... - ✗ Failed to connect`，这是预期状态，不是装坏了。OAuth 完成后变 ✓。
+在 Claude Code 内 `/mcp` → Authenticate 时报错：
 
-### 远程 MCP 认证特性
+```
+SDK auth failed: Incompatible auth server: does not support dynamic client registration
+```
 
-> OAuth 状态**按用户存**，不按项目。一次授权后所有项目都能直接用，不用每个仓库重新登录。
+**原因：** Claude Code 的 OAuth 客户端依赖 RFC 7591「Dynamic Client Registration」自动向 OAuth 服务器注册。GitHub 出于安全考虑只接受**预先在后台注册**的 OAuth App——双方对不上，OAuth 流程走不通。
 
-### 验证
+### 备选方案：PAT + Header 认证（可行但繁琐）
+
+绕开 OAuth，改用 fine-grained PAT 通过 header 注入：
 
 ```bash
-claude mcp list
-# 期望（OAuth 后）：github: https://api.githubcopilot.com/mcp/readonly (HTTP) - ✓ Connected
+claude mcp add --transport http github -s user \
+  --header "Authorization: Bearer github_pat_xxx" \
+  https://api.githubcopilot.com/mcp/readonly
 ```
 
-### 使用示例
+**为什么没选这条：**
 
-```
-用 github mcp 看一下 anthropics/claude-code 仓库最近的 5 个 issue
-```
+- 要在 GitHub 后台手动配置 fine-grained PAT：指定仓库 + 勾选 Read-only 权限（Contents / Issues / Pull requests / Metadata）
+- PAT 有过期时间，需要周期性轮换
+- PAT 明文写入 `~/.claude.json`，没有加密存储
+- 文档维护场景下，MCP 的能力跟 `gh pr list` / `gh issue view` 等命令高度重合
 
-调用成功时 tool call 名称会形如 `mcp__github__*`，可据此判断是否真的走了 MCP。
+### 决策依据
 
----
+文档维护工作流里 GitHub 操作以"查"为主，`gh` CLI 通过 Bash 调用已经够用。MCP 的增益（结构化工具调用、工具发现）不足以抵消 PAT 维护成本。
 
-## 升级
+> ★ 经验：选 MCP 别只看"功能炫"，要评估它**是否真正替代或叠加在已有工具流之上**。能力高度重叠的工具最好只保留一个，避免决策与维护负担。
 
-| MCP | 升级方式 |
-|-----|----------|
-| context7 | `npx -y` 每次启动都拉最新，无需手动升级 |
-| github | 远程托管，server 端由 GitHub 自动维护 |
+### 如果以后改主意
 
-> 远程 MCP 的好处：不用关心版本升级，服务端发版即生效。
-
----
-
-## 卸载
-
-```bash
-claude mcp remove context7 -s user
-claude mcp remove github -s user
-```
+直接回顾上面"备选方案：PAT + Header 认证"那段的命令即可。
