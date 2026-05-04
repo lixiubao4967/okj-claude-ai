@@ -33,6 +33,7 @@ Claude Code 使用指南与实践记录，按主题分类。
 ### 工作流
 
 - [Vibe Coding 指南](workflow/vibe-coding-guide.md)
+- [LLM Wiki 知识库方法论](workflow/llm-wiki-methodology.md)
 
 ### 内部原理
 
