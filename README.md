@@ -39,3 +39,7 @@ Claude Code 使用指南与实践记录，按主题分类。
 ### 内部原理
 
 - [Claude Code 源码深度架构分析](internals/claude-code-architecture.md)
+
+### 认证备考
+
+- [Claude 认证架构师（基础）备考指南](certification/claude-certified-architect.md)
