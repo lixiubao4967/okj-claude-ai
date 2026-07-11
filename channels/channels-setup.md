@@ -7,9 +7,10 @@
 | 条件 | 说明 |
 |------|------|
 | Claude Code 版本 | v2.1.80 或更高（`claude --version` 查看） |
-| 登录方式 | 必须使用 **claude.ai 账号登录**，不支持 API Key 认证 |
+| 登录方式 | 需使用 **claude.ai 账号登录**，或 Console API key；不支持 platform.claude.com 的纯 API-only 认证 |
 | 运行环境 | 本地需安装 **Bun**（`curl -fsSL https://bun.sh/install \| bash`） |
 | 功能状态 | 目前处于 **Research Preview** 阶段 |
+| 不支持环境 | Amazon Bedrock、Google Cloud Agent Platform、Microsoft Foundry |
 
 > **Team / Enterprise 用户额外步骤**：Channels 默认关闭，需要组织管理员先开启：
 > `claude.ai → Admin settings → Claude Code → Channels → 开启`
@@ -21,27 +22,49 @@
 1. 在 Telegram 中搜索 `@BotFather` 并打开
 2. 发送 `/newbot`，按提示填写 Bot 名称，获取 **Bot Token**
 
-**第二步：在 Claude Code 中配置**
+**第二步：安装 Channels 插件**
 ```bash
-/telegram:configure
+/plugin install telegram@claude-plugins-official
+/reload-plugins
 ```
-输入 Bot Token，系统会生成一个安全配对码。
 
-**第三步：完成配对**
+**第三步：用 `--channels` 重启 Claude Code**
+```bash
+claude --channels plugin:telegram@claude-plugins-official
+```
+> Channels 功能默认不激活，必须带 `--channels` 参数重启会话才能生效。
 
-在 Telegram 中找到你刚创建的 Bot，发送任意消息，完成账号绑定（首次消息会将你的 ID 加入白名单）。
+**第四步：配置 Bot Token**
+```bash
+/telegram:configure <token>
+```
+Token 直接作为参数传入（不是交互式输入）。配置成功后，Bot 会在 Telegram 端生成一个配对码。
 
-**第四步：开始使用**
+**第五步：完成配对**
+
+在 Telegram 中向 Bot 发送任意消息，获取其回复的配对码，然后回到 Claude Code 执行：
+```bash
+/telegram:access pair <code>
+```
+完成后该 Telegram 账号会被加入白名单。
+
+**第六步：开始使用**
 
 直接在 Telegram 向 Bot 发送编程任务，Claude Code 后台执行，完成后回复通知你。
 
 ## Discord 配置步骤
 
 ```bash
-/discord:configure
+/plugin install discord@claude-plugins-official
+/reload-plugins
+claude --channels plugin:discord@claude-plugins-official
+/discord:configure <token>
+/discord:access pair <code>
 ```
 
-流程与 Telegram 类似，配置完成后向 Bot 发送任意消息完成配对。
+流程与 Telegram 一致：先装插件、带 `--channels` 重启、传入 Token 配置、再用配对码完成绑定。
+
+> 来源：https://code.claude.com/docs/en/channels.md
 
 ## 工作原理
 
