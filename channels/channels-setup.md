@@ -16,6 +16,14 @@
 > `claude.ai → Admin settings → Claude Code → Channels → 开启`
 > 或在 managed settings 中设置 `channelsEnabled: true`。
 
+> **踩坑**：Claude Team 账号下，Token 配置、插件安装、`--channels` 启动全部正常完成，Telegram Bot 却始终不回配对码。排查时发现带 `--channels` 参数的会话没有任何子进程——MCP server（`bun run start`）根本没被拉起。启动界面上其实打印了原因，只是容易被滚动过去没注意到：
+> ```
+> --channels blocked by org policy (plugin:telegram@claude-plugins-official)
+> Inbound messages will be silently dropped
+> Have an administrator set channelsEnabled: true in managed settings to enable
+> ```
+> 也就是本节开头提到的组织策略限制。本地配置再对也没用，得先让组织管理员在 `claude.ai → Admin settings → Claude Code → Channels` 里开启。
+
 ## Telegram 配置步骤
 
 **第一步：创建 Telegram Bot**
