@@ -16,7 +16,8 @@
 ├── tools/                 ← 工具（gstack / Obsidian 等）
 ├── quickstart/            ← 快速入门
 ├── workflow/              ← 工作流与方法论
-├── internals/             ← 内部原理与源码分析
+├── internals/             ← Claude Code 内部原理与源码分析
+├── agent-theory/          ← AI Agent 通用原理与外部学习资源
 ├── certification/         ← Claude 认证考试备考资料
 ├── wechat/                ← 微信公众号文稿（待 openclaw 推送）
 └── .claude/
