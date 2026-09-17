@@ -7,6 +7,7 @@ Claude Code 使用指南与实践记录，按主题分类。
 ### 安装与配置
 
 - [安装与初始配置](setup/installation.md)
+- [Windows 安装 Claude Code](setup/windows-installation.md)
 
 ### 日常使用
 
